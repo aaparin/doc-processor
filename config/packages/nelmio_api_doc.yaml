@@ -1,0 +1,29 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Documents Processing API
+            description: API for processing document templates with JSON data
+            version: 1.0.0
+        components:
+            schemas:
+                ErrorResponse:
+                    type: object
+                    properties:
+                        status:
+                            type: string
+                            example: error
+                        message:
+                            type: string
+                            example: Error message description
+                        errors:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                    field:
+                                        type: string
+                                    message:
+                                        type: string
+    areas:
+        path_patterns:
+            - ^/api/v1

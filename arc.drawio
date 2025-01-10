@@ -1,0 +1,152 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="25.0.1">
+  <diagram name="Страница — 1" id="ViEjIPU6rqY31bANfhfQ">
+    <mxGraphModel dx="1434" dy="939" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-1" value="Client" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="150" height="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-2" value="DocumentController" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="314" y="20" width="167" height="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-3" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="n7S-86NBI-VZTEe11Bn1-2">
+          <mxGeometry x="78" y="101" width="10" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-4" value="RabbitMQ (doc.process)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="531" y="20" width="197" height="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-5" value="ProcessDocumentHandler" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="778" y="20" width="210" height="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-6" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="n7S-86NBI-VZTEe11Bn1-5">
+          <mxGeometry x="100" y="307" width="10" height="219" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-7" value="RabbitMQ (pdf.convert)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1038" y="20" width="191" height="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-8" value="Go Service" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1279" y="20" width="150" height="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-9" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="n7S-86NBI-VZTEe11Bn1-8">
+          <mxGeometry x="70" y="562" width="10" height="151" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-10" value="RabbitMQ (pdf.result)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1486" y="20" width="177" height="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-11" value="PdfConversionResultHandler" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;container=1;dropTarget=0;collapsible=0;recursiveResize=0;outlineConnect=0;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0};size=65;" vertex="1" parent="1">
+          <mxGeometry x="1713" y="20" width="228" height="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-12" value="" style="points=[];perimeter=orthogonalPerimeter;outlineConnect=0;targetShapes=umlLifeline;portConstraint=eastwest;newEdgeStyle={&quot;edgeStyle&quot;:&quot;elbowEdgeStyle&quot;,&quot;elbow&quot;:&quot;vertical&quot;,&quot;curved&quot;:0,&quot;rounded&quot;:0}" vertex="1" parent="n7S-86NBI-VZTEe11Bn1-11">
+          <mxGeometry x="109" y="749" width="10" height="124" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-13" value="POST /api/v1/documents/upload" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-1" target="n7S-86NBI-VZTEe11Bn1-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="253" y="121" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-14" value="ProcessDocument" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-3" target="n7S-86NBI-VZTEe11Bn1-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="524" y="235" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-15" value="200 OK (request_id)" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-3" target="n7S-86NBI-VZTEe11Bn1-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="256" y="281" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-16" value="ProcessDocument" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-4" target="n7S-86NBI-VZTEe11Bn1-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="762" y="327" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-17" value="ConvertToPdf" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-6" target="n7S-86NBI-VZTEe11Bn1-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1018" y="441" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-18" value="ack" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-6" target="n7S-86NBI-VZTEe11Bn1-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="765" y="536" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-19" value="ConvertToPdf" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-7" target="n7S-86NBI-VZTEe11Bn1-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1250" y="582" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-20" value="PdfConversionResult" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-9" target="n7S-86NBI-VZTEe11Bn1-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1475" y="677" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-21" value="ack" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-9" target="n7S-86NBI-VZTEe11Bn1-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1253" y="723" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-22" value="PdfConversionResult" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-10" target="n7S-86NBI-VZTEe11Bn1-12">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1707" y="769" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-23" value="ack" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-12" target="n7S-86NBI-VZTEe11Bn1-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1710" y="883" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-24" value="GET /api/v1/documents/{id}" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-1" target="n7S-86NBI-VZTEe11Bn1-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="255" y="929" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-25" value="Document status &amp; result" style="verticalAlign=bottom;edgeStyle=elbowEdgeStyle;elbow=vertical;curved=0;rounded=0;dashed=1;dashPattern=2 3;endArrow=block;" edge="1" parent="1" source="n7S-86NBI-VZTEe11Bn1-2" target="n7S-86NBI-VZTEe11Bn1-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="258" y="975" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-26" value="Save template &amp; create IncomeRequest&#xa;Status: NEW" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="245" y="141" width="305" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-27" value="Generate DOCX&#xa;Status: PROCESSING" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="778" y="347" width="210" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-28" value="Status: CONVERTING_TO_PDF" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="761" y="461" width="244" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-29" value="Convert DOCX to PDF" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="1264" y="602" width="179" height="49" as="geometry" />
+        </mxCell>
+        <mxCell id="n7S-86NBI-VZTEe11Bn1-30" value="Update status:&#xa;COMPLETED or ERROR" style="fillColor=#ffff88;strokeColor=#9E916F;" vertex="1" parent="1">
+          <mxGeometry x="1713" y="789" width="228" height="68" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
