@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: doc_processor_app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+      - shared_files:/var/www/shared # Общая директория для файлов
+    networks:
+      - doc_processor_network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    container_name: doc_processor_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - shared_files:/var/www/shared # Общая директория для файлов
+    networks:
+      - doc_processor_network
+    depends_on:
+      - app
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: doc_processor_rabbitmq
+    ports:
+      - "5672:5672"   # AMQP protocol port
+      - "15672:15672" # Management UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - doc_processor_network
+
+volumes:
+  rabbitmq_data:
+  shared_files: # Общий volume для файлов между сервисами
+
+networks:
+  doc_processor_network:
+    driver: bridge
