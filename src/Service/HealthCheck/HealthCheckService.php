@@ -20,29 +20,17 @@ class HealthCheckService
 
     public function check(): array
     {
-        $dbStatus = $this->checkDatabase();
         $storageStatus = $this->checkStorage();
         $systemStatus = $this->checkSystem();
 
-        $isHealthy = $dbStatus && $storageStatus;
+        $isHealthy = $storageStatus;
 
         return [
             'status' => $isHealthy ? 'healthy' : 'unhealthy',
-            'database' => $dbStatus,
             'storage' => $storageStatus,
             'version' => $this->version,
             'system' => $systemStatus
         ];
-    }
-
-    private function checkDatabase(): bool
-    {
-        try {
-            $this->connection->connect();
-            return $this->connection->isConnected();
-        } catch (\Exception) {
-            return false;
-        }
     }
 
     private function checkStorage(): bool

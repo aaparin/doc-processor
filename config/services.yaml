@@ -34,3 +34,7 @@ services:
         arguments:
             $templatesDir: '%kernel.project_dir%/templates/documents/'
             $version: '1.0.0'
+
+    App\Service\Document\DocumentConversionService:
+        arguments:
+            $conversionEndpoint: '%env(CONVERSION_ENDPOINT)%'

@@ -5,31 +5,22 @@ declare(strict_types=1);
 namespace App\Controller\Api\V1;
 
 use App\DTO\UploadRequest;
-use App\Entity\IncomeRequest;
-use App\Exception\DocumentGenerationException;
-use App\Message\ProcessDocument;
-use App\Response\ApiResponse;
-use App\Service\Document\DocumentStatusManager;
-use App\Service\Document\WordDocumentGenerator;
-use App\Service\DocumentGeneratorFactory;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use OpenApi\Attributes as OA;
+use App\Response\ApiResponse;
+use App\Service\Document\DocumentConversionService;
+use App\Service\Document\WordDocumentGenerator;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Filesystem\Filesystem;
 
 #[Route('/api/v1')]
 class DocumentController
 {
-
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly WordDocumentGenerator  $documentGenerator,
-        private readonly Filesystem             $filesystem,
-        private readonly DocumentGeneratorFactory $documentGeneratorFactory,
-        private readonly DocumentStatusManager $statusManager
-
+        private readonly WordDocumentGenerator $documentGenerator,
+        private readonly DocumentConversionService $conversionService,
+        private readonly Filesystem $filesystem
     ) {}
 
     #[Route('/documents/upload', name: 'v1_document_upload', methods: ['POST'])]
@@ -71,8 +62,7 @@ class DocumentController
                         new OA\Property(
                             property: 'data',
                             properties: [
-                                new OA\Property(property: 'id', type: 'integer'),
-                                new OA\Property(property: 'generated_file', type: 'string')
+                                new OA\Property(property: 'generated_file', type: 'file',format: 'binary'),
                             ],
                             type: 'object'
                         )
@@ -91,64 +81,57 @@ class DocumentController
             )
         ]
     )]
-    public function upload(UploadRequest $uploadRequest, MessageBusInterface $messageBus): JsonResponse
+    public function upload(UploadRequest $uploadRequest): Response
     {
+        $tempFile = null;
+
         try {
-            // 1. Создаем запись в БД
-            $entity = $this->createIncomeRequest($uploadRequest);
-            $this->statusManager->markAsNew($entity);
+            // Сохраняем загруженный файл во временную директорию
+            $originalFilename = $uploadRequest->file->getClientOriginalName();
+            $tempFile = $this->documentGenerator->getTemplatesDir() . $originalFilename;
 
-            // 2. Сохраняем загруженный шаблон
-            $this->saveTemplate($uploadRequest, $entity);
-            $this->entityManager->persist($entity);
-            $this->entityManager->flush();
+            // Копируем файл в директорию шаблонов
+            $this->filesystem->copy(
+                $uploadRequest->file->getRealPath(),
+                $tempFile,
+                true
+            );
 
-            // 3. Отправляем в очередь для обработки
-            $message = new ProcessDocument($entity->getId(), $entity->getTemplateName());
-            $messageBus->dispatch($message);
+            // Генерируем DOCX из шаблона
+            $docxPath = $this->documentGenerator->generate(
+                $uploadRequest->json,
+                $originalFilename
+            );
 
-            return new JsonResponse(
-                ApiResponse::success('Document sent for processing', [
-                    'id' => $entity->getId()
-                ])->toArray()
+            // Отправляем на конвертацию
+            $result = $this->conversionService->convertToPdf($docxPath);
+
+            if (!$result->isSuccess()) {
+                return new JsonResponse(
+                    ApiResponse::error($result->getError())->toArray(),
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
+            // Возвращаем PDF
+            return new Response(
+                $result->getPdfContent(),
+                Response::HTTP_OK,
+                ['Content-Type' => 'application/pdf']
             );
 
         } catch (\Exception $e) {
-            if (isset($entity)) {
-                $this->statusManager->markAsError($entity, $e->getMessage());
-                $this->cleanupOnError($entity);
+            return new JsonResponse(
+                ApiResponse::error('Error processing document: ' . $e->getMessage())->toArray(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        } finally {
+            // Очищаем временные файлы
+            if ($tempFile && file_exists($tempFile)) {
+                $this->filesystem->remove($tempFile);
             }
-            throw new DocumentGenerationException('Error processing request: ' . $e->getMessage());
-        }
-    }
-
-    private function createIncomeRequest(UploadRequest $uploadRequest): IncomeRequest
-    {
-        $entity = new IncomeRequest();
-        $templateName = uniqid() . '_' . $uploadRequest->file->getClientOriginalName();
-
-        $entity->setJsonData($uploadRequest->json);
-        $entity->setTemplateName($templateName);
-        $entity->setCreatedAt(new \DateTimeImmutable());
-
-        return $entity;
-    }
-
-    private function saveTemplate(UploadRequest $uploadRequest, IncomeRequest $entity): void
-    {
-        $this->filesystem->copy(
-            $uploadRequest->file->getRealPath(),
-            $this->documentGenerator->getTemplatesDir() . $entity->getTemplateName(),
-            true
-        );
-    }
-
-    private function cleanupOnError(?IncomeRequest $entity): void
-    {
-        if ($entity && $entity->getTemplateName()) {
-            $templatePath = $this->documentGenerator->getTemplatesDir() . $entity->getTemplateName();
-            if ($this->filesystem->exists($templatePath)) {
-                $this->filesystem->remove($templatePath);
+            if (isset($docxPath) && file_exists($docxPath)) {
+                $this->filesystem->remove($docxPath);
             }
         }
     }

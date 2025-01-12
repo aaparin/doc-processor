@@ -34,7 +34,6 @@ class HealthController
                         new OA\Property(
                             property: 'data',
                             properties: [
-                                new OA\Property(property: 'database', type: 'boolean'),
                                 new OA\Property(property: 'storage', type: 'boolean'),
                                 new OA\Property(property: 'version', type: 'string'),
                                 new OA\Property(
