@@ -18,32 +18,34 @@ COPY docker/php.ini /usr/local/etc/php/conf.d/custom.ini
 WORKDIR /app
 
 # Копирование composer файлов
-COPY composer.json composer.lock ./
+COPY composer.json ./
 
-# Установка зависимостей
+# Установка symfony/runtime (явно)
+RUN composer require symfony/runtime
+
+# Установка зависимостей без выполнения скриптов
 RUN composer install --no-scripts --no-autoloader --prefer-dist
 
 # Копирование остальных файлов проекта
 COPY . .
 
-# Установка переменных окружения
-ENV MESSENGER_TRANSPORT_DSN=sync://
-ENV APP_ENV=prod
-ENV CONVERSION_ENDPOINT=http://localhost:8181/convert
+# Копирование файла .env
+COPY .env /app/.env
+
+# Выполнение скриптов
+RUN composer run-script auto-scripts
 
 # Финальные настройки
 RUN composer dump-autoload --optimize \
     && mkdir -p var/cache var/log var/data \
     && chmod -R 777 var/cache var/log var/data \
     && touch var/data/data.db \
+    && export MESSENGER_TRANSPORT_DSN=sync:// \
     && php bin/console doctrine:schema:update --force \
     && php bin/console cache:clear --env=prod
-
-# Очистка
-RUN rm -rf /tmp/* /var/cache/apk/*
 
 # Порт
 EXPOSE 8000
 
 # Запуск symfony сервера
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+CMD php -S 0.0.0.0:8000 -t public

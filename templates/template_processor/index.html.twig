@@ -1,0 +1,180 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Template Processor{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none;
+        }
+        .error {
+            color: #dc3545;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Template Processor</h1>
+
+        <div class="form-group">
+            <label for="template">Template File (.docx)</label>
+            <input type="file" id="template" accept=".docx" />
+            <div id="fileError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="jsonData">JSON Data</label>
+            <textarea id="jsonData" placeholder="Enter your JSON data here"></textarea>
+            <div id="jsonError" class="error"></div>
+        </div>
+
+        <div class="button-group">
+            <button onclick="analyzeTemplate()" id="analyzeBtn">Check File</button>
+            <button onclick="generatePdf()" id="generateBtn">Make PDF</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        async function analyzeTemplate() {
+            const fileInput = document.getElementById('template');
+            const resultDiv = document.getElementById('result');
+            const fileError = document.getElementById('fileError');
+
+            if (!fileInput.files[0]) {
+                fileError.textContent = 'Please select a file';
+                fileError.style.display = 'block';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            try {
+                const response = await fetch('{{ path('v1_analyze_template') }}', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                    resultDiv.style.display = 'block';
+                    fileError.style.display = 'none';
+                } else {
+                    throw new Error(data.message || 'Analysis failed');
+                }
+            } catch (error) {
+                fileError.textContent = error.message;
+                fileError.style.display = 'block';
+            }
+        }
+
+        async function generatePdf() {
+            const fileInput = document.getElementById('template');
+            const jsonInput = document.getElementById('jsonData');
+            const fileError = document.getElementById('fileError');
+            const jsonError = document.getElementById('jsonError');
+
+            if (!fileInput.files[0]) {
+                fileError.textContent = 'Please select a file';
+                fileError.style.display = 'block';
+                return;
+            }
+
+            let jsonData;
+            try {
+                jsonData = JSON.parse(jsonInput.value);
+            } catch (e) {
+                jsonError.textContent = 'Invalid JSON format';
+                jsonError.style.display = 'block';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            formData.append('json', JSON.stringify(jsonData));
+
+            try {
+                const response = await fetch('{{ path('v1_document_upload') }}', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    window.open(url);
+                } else {
+                    const data = await response.json();
+                    throw new Error(data.message || 'PDF generation failed');
+                }
+            } catch (error) {
+                fileError.textContent = error.message;
+                fileError.style.display = 'block';
+            }
+        }
+
+        // Clear errors on input change
+        document.getElementById('template').addEventListener('change', () => {
+            document.getElementById('fileError').style.display = 'none';
+        });
+
+        document.getElementById('jsonData').addEventListener('input', () => {
+            document.getElementById('jsonError').style.display = 'none';
+        });
+    </script>
+{% endblock %}
