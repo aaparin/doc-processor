@@ -33,6 +33,7 @@ class DocumentConversionService
             ]);
 
             if ($response->getStatusCode() !== 200) {
+
                 return new DocumentProcessingResult(
                     false,
                     null,
